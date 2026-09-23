@@ -2,6 +2,9 @@
 
 本项目是 HTML5 课程课后任务，用原生 HTML、CSS 和 JavaScript 实现 AI 助教答疑平台的个性化注册页与登录页。所有演示数据仅保存在浏览器 `localStorage`，不连接真实后端。
 
+## VS Code 开发
+
+使用 VS Code 打开项目后，可运行任务“启动 AI 助教答疑平台”，并在 OpenAI ChatGPT/Codex 扩展中按照 `docs/vscode/VS-Code-Codex四轮迭代记录.md` 依次完成四轮迭代。`.vscode/tasks.json` 已配置等价的本地服务启动命令。
 ## 本地运行
 
 ```powershell
