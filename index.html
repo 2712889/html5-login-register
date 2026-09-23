@@ -27,6 +27,7 @@
         <li><span>02</span>学习过程持续记录</li>
         <li><span>03</span>个性化内容推荐</li>
       </ul>
+      <p class="demo-account">演示账号会在本机注册页创建，不会上传服务器。</p>
     </section>
 
     <section class="form-panel" aria-labelledby="login-title">
@@ -41,27 +42,32 @@
       <form id="loginForm" class="auth-form" novalidate>
         <div class="field">
           <label for="loginEmail">邮箱地址</label>
-          <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="name@example.com" required>
+          <input id="loginEmail" name="email" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com" required>
           <p class="field-hint">请输入注册时使用的邮箱。</p>
+          <p class="field-error" id="loginEmailError" hidden></p>
         </div>
 
         <div class="field">
           <label for="loginPassword">密码</label>
           <div class="input-action">
-            <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required>
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="请输入密码" required>
             <button class="text-button password-toggle" type="button" aria-controls="loginPassword" aria-pressed="false">显示</button>
           </div>
+          <p class="field-error" id="loginPasswordError" hidden></p>
         </div>
 
         <div class="form-options">
           <label class="check-row">
-            <input name="remember" type="checkbox">
+            <input id="rememberAccount" name="remember" type="checkbox">
             <span>记住账号</span>
           </label>
           <button class="link-button" type="button" data-demo-action="reset">忘记密码？</button>
         </div>
 
-        <button class="primary-button" type="submit">进入答疑平台</button>
+        <button class="primary-button" type="submit">
+          <span>进入答疑平台</span>
+          <span class="button-arrow" aria-hidden="true">→</span>
+        </button>
       </form>
 
       <p class="switch-page">还没有账号？<a href="register.html">创建个人学习档案</a></p>
