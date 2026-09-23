@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AI助教答疑平台登录页面，支持个性化学习服务。">
   <title>登录 | AI助教答疑平台</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/auth.js" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <script src="js/auth.js?v=4" defer></script>
 </head>
 <body class="auth-page login-page">
   <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -49,18 +49,19 @@
         </div>
       </section>
 
+      <p class="form-error-summary" id="loginErrorSummary" role="alert" hidden></p>
       <form id="loginForm" class="auth-form" novalidate>
         <div class="field">
           <label for="loginEmail">邮箱地址</label>
-          <input id="loginEmail" name="email" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com" required>
-          <p class="field-hint">请输入注册时使用的邮箱。</p>
+          <input id="loginEmail" name="email" type="email" autocomplete="username" inputmode="email" enterkeyhint="next" aria-describedby="loginEmailHint loginEmailError" placeholder="name@example.com" required>
+          <p class="field-hint" id="loginEmailHint">请输入注册时使用的邮箱。</p>
           <p class="field-error" id="loginEmailError" hidden></p>
         </div>
 
         <div class="field">
           <label for="loginPassword">密码</label>
           <div class="input-action">
-            <input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="请输入密码" required>
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="8" enterkeyhint="done" aria-describedby="loginPasswordError" placeholder="请输入密码" required>
             <button class="text-button password-toggle" type="button" aria-controls="loginPassword" aria-pressed="false">显示</button>
           </div>
           <p class="field-error" id="loginPasswordError" hidden></p>

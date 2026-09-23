@@ -13,6 +13,18 @@ function getErrorElement(input) {
   return document.getElementById(`${input.id}Error`);
 }
 
+function updateErrorSummary(form, messages) {
+  const summary = document.getElementById(`${form.id.replace("Form", "")}ErrorSummary`);
+  if (!summary) return;
+  if (!messages.length) {
+    summary.textContent = "";
+    summary.hidden = true;
+    return;
+  }
+  summary.textContent = `请检查以下内容：${messages.slice(0, 3).join("；")}${messages.length > 3 ? "等" : ""}`;
+  summary.hidden = false;
+}
+
 function showError(input, message) {
   const error = getErrorElement(input);
   input.setCustomValidity(message);
@@ -186,23 +198,27 @@ if (new URLSearchParams(location.search).get("registered") === "1") {
 document.getElementById("registerForm")?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
-  const valid = Array.from(form.querySelectorAll("input, select")).every((input) => validateInput(input));
+  const messages = [];
+  const fields = Array.from(form.querySelectorAll("input, select"));
+  const valid = fields.map((input) => {
+    const isValid = validateInput(input);
+    if (!isValid) messages.push(getErrorElement(input)?.textContent || "存在无效内容");
+    return isValid;
+  }).every(Boolean);
   const password = form.elements.password;
   const confirmPassword = form.elements.confirmPassword;
 
+  if (!valid) {
+    updateErrorSummary(form, messages);
+    form.querySelector(":invalid")?.focus();
+    return;
+  }
+
   if (password.value !== confirmPassword.value) {
     showError(confirmPassword, "两次输入的密码不一致");
+    messages.push("两次输入的密码不一致");
+    updateErrorSummary(form, messages);
     confirmPassword.focus();
-    return;
-  }
-
-  if (!form.elements.terms.checked) {
-    showError(form.elements.terms, "请先同意平台使用约定");
-    return;
-  }
-
-  if (!valid || !form.checkValidity()) {
-    form.querySelector(":invalid")?.focus();
     return;
   }
 
@@ -220,11 +236,18 @@ document.getElementById("registerForm")?.addEventListener("submit", async (event
 
   const record = { profile, passwordHash: await digestPassword(password.value), createdAt: new Date().toISOString() };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
-  setStatus(document.getElementById("registerStatus"), "学习档案创建成功，正在前往登录页面…");
+  setStatus(document.getElementById("registerStatus"), "学习档案创建成功。");
   form.querySelector("button[type='submit']").disabled = true;
-  setTimeout(() => {
-    location.href = `index.html?registered=1&email=${encodeURIComponent(profile.email)}`;
-  }, 700);
+  const dialog = document.getElementById("successDialog");
+  const goToLogin = document.getElementById("goToLogin");
+  const destination = `index.html?registered=1&email=${encodeURIComponent(profile.email)}`;
+  if (dialog?.showModal) {
+    dialog.showModal();
+    goToLogin?.focus();
+    goToLogin?.addEventListener("click", () => { location.href = destination; }, { once: true });
+  } else {
+    setTimeout(() => { location.href = destination; }, 700);
+  }
 });
 
 document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
@@ -234,7 +257,14 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
   const passwordInput = form.elements.password;
   const emailValid = validateInput(emailInput);
   const passwordValid = validateInput(passwordInput);
-  if (!emailValid || !passwordValid) return;
+  const messages = [];
+  if (!emailValid) messages.push(getErrorElement(emailInput)?.textContent || "邮箱格式不正确");
+  if (!passwordValid) messages.push(getErrorElement(passwordInput)?.textContent || "密码格式不正确");
+  updateErrorSummary(form, messages);
+  if (!emailValid || !passwordValid) {
+    form.querySelector(":invalid")?.focus();
+    return;
+  }
 
   const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
   if (!stored || stored.profile.email !== emailInput.value.trim().toLowerCase()) {

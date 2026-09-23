@@ -431,3 +431,74 @@ body[data-theme="mint"] { --primary: #149c8a; --primary-deep: #08786b; --accent:
   .welcome-card { grid-template-columns: 1fr; }
   .welcome-avatar { width: 46px; height: 46px; border-radius: 14px; }
 }
+/* v4: 无障碍、焦点和成功反馈 */
+:focus-visible {
+  outline: 3px solid rgba(89, 103, 237, 0.36);
+  outline-offset: 3px;
+}
+
+input:focus-visible,
+select:focus-visible { outline: none; }
+
+.form-error-summary {
+  margin: 20px 0 -10px;
+  padding: 11px 13px;
+  color: var(--danger);
+  font-size: 13px;
+  line-height: 1.5;
+  background: rgba(207, 63, 97, 0.08);
+  border: 1px solid rgba(207, 63, 97, 0.2);
+  border-radius: 10px;
+}
+
+.status-message:empty { min-height: 0; margin: 0; }
+
+.success-dialog {
+  width: min(440px, calc(100% - 32px));
+  padding: 36px;
+  color: var(--ink);
+  text-align: center;
+  background: #fff;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: 0 32px 100px rgba(24, 33, 61, 0.34);
+}
+
+.success-dialog::backdrop {
+  background: rgba(20, 25, 57, 0.48);
+  backdrop-filter: blur(7px);
+}
+
+.success-dialog h2 { margin: 3px 0 0; font-size: 26px; }
+.success-dialog > p:not(.eyebrow) { margin: 12px 0 24px; color: var(--muted); line-height: 1.7; }
+.success-dialog .primary-button { width: 100%; }
+.dialog-icon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 20px;
+  place-items: center;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #18a87b, #1ebfc0);
+  border-radius: 50%;
+  box-shadow: 0 12px 30px rgba(24, 168, 123, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .primary-button,
+  .brand-mark,
+  .avatar-preview,
+  .avatar-fallback,
+  .welcome-avatar { border: 2px solid ButtonText; }
+}

@@ -1,0 +1,4 @@
+.capture/
+docs/screenshots/*-part*.png
+docs/screenshots/mobile-login.png
+docs/screenshots/mobile-register.png
