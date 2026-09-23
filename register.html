@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI助教答疑平台注册页面，创建个性化学习档案。">
+  <title>注册 | AI助教答疑平台</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js" defer></script>
+</head>
+<body class="auth-page register-page">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+
+  <main class="auth-shell register-shell" id="main-content">
+    <section class="brand-panel" aria-labelledby="brand-title">
+      <div class="brand-topline">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+        <span>智能学习空间</span>
+      </div>
+      <p class="eyebrow">CREATE YOUR PROFILE</p>
+      <h1 id="brand-title">从一次提问开始</h1>
+      <p class="brand-copy">创建学习档案，让每次答疑更接近你的课程、目标与节奏。</p>
+      <blockquote>“好的问题，会让学习真正发生。”</blockquote>
+    </section>
+
+    <section class="form-panel" aria-labelledby="register-title">
+      <div class="panel-heading">
+        <p class="eyebrow">GET STARTED</p>
+        <h2 id="register-title">创建学习档案</h2>
+        <p>填写基础信息，完成后即可登录体验。</p>
+      </div>
+
+      <p class="status-message" id="registerStatus" role="status" aria-live="polite"></p>
+
+      <form id="registerForm" class="auth-form" novalidate>
+        <div class="field">
+          <label for="nickname">昵称</label>
+          <input id="nickname" name="nickname" type="text" autocomplete="nickname" placeholder="例如：小智" required>
+        </div>
+
+        <div class="field">
+          <label for="registerEmail">邮箱地址</label>
+          <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+        </div>
+
+        <div class="field">
+          <label for="registerPassword">设置密码</label>
+          <div class="input-action">
+            <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="至少 8 位字符" required>
+            <button class="text-button password-toggle" type="button" aria-controls="registerPassword" aria-pressed="false">显示</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">确认密码</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="请再次输入密码" required>
+        </div>
+
+        <label class="check-row terms-row">
+          <input name="terms" type="checkbox" required>
+          <span>我已阅读并同意学习平台使用约定</span>
+        </label>
+
+        <button class="primary-button" type="submit">完成注册</button>
+      </form>
+
+      <p class="switch-page">已有账号？<a href="index.html">返回登录</a></p>
+    </section>
+  </main>
+</body>
+</html>

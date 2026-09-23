@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI助教答疑平台登录页面，支持个性化学习服务。">
+  <title>登录 | AI助教答疑平台</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js" defer></script>
+</head>
+<body class="auth-page login-page">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+
+  <main class="auth-shell" id="main-content">
+    <section class="brand-panel" aria-labelledby="brand-title">
+      <div class="brand-topline">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+        <span>智能学习空间</span>
+      </div>
+      <p class="eyebrow">AI TUTOR PLATFORM</p>
+      <h1 id="brand-title">AI助教答疑平台</h1>
+      <p class="brand-copy">随时提问，获得清晰、分层、贴近学习进度的智能解答。</p>
+      <ul class="feature-list" aria-label="平台特色">
+        <li><span>01</span>学科问题即时答疑</li>
+        <li><span>02</span>学习过程持续记录</li>
+        <li><span>03</span>个性化内容推荐</li>
+      </ul>
+    </section>
+
+    <section class="form-panel" aria-labelledby="login-title">
+      <div class="panel-heading">
+        <p class="eyebrow">WELCOME BACK</p>
+        <h2 id="login-title">登录学习空间</h2>
+        <p>使用注册邮箱继续你的学习旅程。</p>
+      </div>
+
+      <p class="status-message" id="loginStatus" role="status" aria-live="polite"></p>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="field">
+          <label for="loginEmail">邮箱地址</label>
+          <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="name@example.com" required>
+          <p class="field-hint">请输入注册时使用的邮箱。</p>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">密码</label>
+          <div class="input-action">
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required>
+            <button class="text-button password-toggle" type="button" aria-controls="loginPassword" aria-pressed="false">显示</button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="check-row">
+            <input name="remember" type="checkbox">
+            <span>记住账号</span>
+          </label>
+          <button class="link-button" type="button" data-demo-action="reset">忘记密码？</button>
+        </div>
+
+        <button class="primary-button" type="submit">进入答疑平台</button>
+      </form>
+
+      <p class="switch-page">还没有账号？<a href="register.html">创建个人学习档案</a></p>
+      <p class="privacy-note">演示页面仅在当前浏览器保存模拟学习资料。</p>
+    </section>
+  </main>
+</body>
+</html>
