@@ -87,16 +87,50 @@ function updatePasswordStrength() {
   output.textContent = labels[score];
 }
 
+function renderInterestTags(container, interests) {
+  if (!container) return;
+  container.replaceChildren();
+  interests.forEach((interest) => {
+    const tag = document.createElement("span");
+    tag.className = "interest-tag";
+    tag.textContent = interest;
+    container.append(tag);
+  });
+}
+
 function updateAvatarPreview() {
   const fileInput = document.getElementById("avatar");
   const preview = document.getElementById("avatarPreview");
-  if (!fileInput || !preview || !fileInput.files?.[0]) return;
+  const fallback = document.getElementById("avatarFallback");
+  if (!fileInput || !preview || !fallback || !fileInput.files?.[0]) return;
   const [file] = fileInput.files;
   if (!file.type.startsWith("image/")) return;
   const imageUrl = URL.createObjectURL(file);
   preview.src = imageUrl;
   preview.hidden = false;
+  fallback.hidden = true;
   preview.addEventListener("load", () => URL.revokeObjectURL(imageUrl), { once: true });
+}
+
+function updateProfilePreview() {
+  const form = document.getElementById("registerForm");
+  if (!form) return;
+  const nickname = form.elements.nickname?.value.trim();
+  const role = form.elements.role?.value;
+  const school = form.elements.school?.value.trim();
+  const grade = form.elements.grade?.value;
+  const interests = collectInterests();
+  const nicknamePreview = document.getElementById("previewNickname");
+  const rolePreview = document.getElementById("previewRole");
+  const fallback = document.getElementById("avatarFallback");
+
+  if (nicknamePreview) nicknamePreview.textContent = nickname || "未来的 AI 学习者";
+  if (fallback) fallback.textContent = (nickname || "智").slice(0, 1);
+  if (rolePreview) {
+    const details = [role, school, grade ? `${grade} 年级` : ""].filter(Boolean);
+    rolePreview.textContent = details.length ? details.join(" · ") : "选择学习身份与兴趣后，这里会实时更新";
+  }
+  renderInterestTags(document.getElementById("previewInterests"), interests);
 }
 
 document.querySelectorAll(".password-toggle").forEach((button) => {
@@ -121,6 +155,15 @@ document.querySelectorAll(".auth-form input, .auth-form select").forEach((input)
 
 document.getElementById("registerPassword")?.addEventListener("input", updatePasswordStrength);
 document.getElementById("avatar")?.addEventListener("change", updateAvatarPreview);
+document.querySelectorAll("#registerForm input, #registerForm select").forEach((input) => {
+  input.addEventListener("input", updateProfilePreview);
+  input.addEventListener("change", updateProfilePreview);
+});
+document.querySelectorAll("input[name='theme']").forEach((input) => {
+  input.addEventListener("change", () => {
+    document.body.dataset.theme = input.value;
+  });
+});
 
 document.querySelectorAll("[data-demo-action='reset']").forEach((button) => {
   button.addEventListener("click", () => setStatus(document.getElementById("loginStatus"), "演示版暂不发送重置邮件，请使用注册页创建账号。", "error"));
@@ -171,7 +214,8 @@ document.getElementById("registerForm")?.addEventListener("submit", async (event
     school: form.elements.school.value.trim(),
     grade: Number(form.elements.grade.value),
     birthday: form.elements.birthday.value,
-    interests: collectInterests()
+    interests: collectInterests(),
+    theme: form.elements.theme.value
   };
 
   const record = { profile, passwordHash: await digestPassword(password.value), createdAt: new Date().toISOString() };
@@ -209,6 +253,18 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
   clearError(passwordInput);
   if (rememberAccount.checked) localStorage.setItem(REMEMBER_KEY, stored.profile.email);
   else localStorage.removeItem(REMEMBER_KEY);
-  setStatus(loginStatus, `欢迎回来，${stored.profile.nickname}。正在进入个性化学习空间…`);
-  form.querySelector("button[type='submit']").disabled = true;
+  document.body.dataset.theme = stored.profile.theme || "ocean";
+  const welcomeCard = document.getElementById("welcomeCard");
+  const welcomeTitle = document.getElementById("welcomeTitle");
+  const welcomeSummary = document.getElementById("welcomeSummary");
+  const welcomeAvatar = document.getElementById("welcomeAvatar");
+  if (welcomeCard && welcomeTitle && welcomeSummary && welcomeAvatar) {
+    welcomeTitle.textContent = `${stored.profile.nickname}，欢迎回来`;
+    welcomeSummary.textContent = `${stored.profile.role} · ${stored.profile.school} · ${stored.profile.grade} 年级`;
+    welcomeAvatar.textContent = stored.profile.nickname.slice(0, 1);
+    renderInterestTags(document.getElementById("welcomeInterests"), stored.profile.interests || []);
+    welcomeCard.hidden = false;
+    welcomeCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  setStatus(loginStatus, "身份验证成功，个性化学习空间已准备就绪。");
 });

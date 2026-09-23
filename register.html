@@ -34,6 +34,17 @@
 
       <p class="status-message" id="registerStatus" role="status" aria-live="polite"></p>
 
+      <aside class="profile-preview" aria-label="学习档案预览">
+        <img id="avatarPreview" class="avatar-preview" alt="头像预览" hidden>
+        <div class="avatar-fallback" id="avatarFallback" aria-hidden="true">智</div>
+        <div class="preview-copy">
+          <small>你的学习档案预览</small>
+          <strong id="previewNickname">未来的 AI 学习者</strong>
+          <span id="previewRole">选择学习身份与兴趣后，这里会实时更新</span>
+        </div>
+        <div class="interest-tags" id="previewInterests"></div>
+      </aside>
+
       <form id="registerForm" class="auth-form" novalidate>
         <div class="form-grid two-columns">
           <div class="field">
@@ -128,6 +139,15 @@
           <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="32" placeholder="请再次输入密码" required>
           <p class="field-error" id="confirmPasswordError" hidden></p>
         </div>
+
+        <fieldset class="choice-group theme-group">
+          <legend>个性化主题</legend>
+          <div class="theme-options">
+            <label><input type="radio" name="theme" value="ocean" checked><span class="theme-dot theme-ocean" aria-hidden="true"></span>深海蓝</label>
+            <label><input type="radio" name="theme" value="violet"><span class="theme-dot theme-violet" aria-hidden="true"></span>星云紫</label>
+            <label><input type="radio" name="theme" value="mint"><span class="theme-dot theme-mint" aria-hidden="true"></span>薄荷青</label>
+          </div>
+        </fieldset>
 
         <label class="check-row terms-row">
           <input id="terms" name="terms" type="checkbox" required>

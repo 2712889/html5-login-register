@@ -39,6 +39,16 @@
 
       <p class="status-message" id="loginStatus" role="status" aria-live="polite"></p>
 
+      <section class="welcome-card" id="welcomeCard" aria-labelledby="welcomeTitle" hidden>
+        <div class="welcome-avatar" id="welcomeAvatar" aria-hidden="true">AI</div>
+        <div>
+          <p class="eyebrow">YOUR LEARNING SPACE</p>
+          <h3 id="welcomeTitle">欢迎回来</h3>
+          <p id="welcomeSummary">正在读取你的学习档案…</p>
+          <div class="interest-tags" id="welcomeInterests"></div>
+        </div>
+      </section>
+
       <form id="loginForm" class="auth-form" novalidate>
         <div class="field">
           <label for="loginEmail">邮箱地址</label>
