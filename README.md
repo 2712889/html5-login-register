@@ -67,4 +67,4 @@ python -m http.server 8080
 
 ## 仓库地址
 
-<https://gitee.com/2712889/html5-login-register>
+<https://github.com/2712889/html5-login-register>
