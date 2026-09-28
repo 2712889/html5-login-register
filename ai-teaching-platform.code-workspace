@@ -1,0 +1,12 @@
+{
+  "folders": [ { "path": "." } ],
+  "settings": {
+    "files.encoding": "utf8",
+    "files.exclude": {
+      ".capture": true,
+      "docs/screenshots/*-part*.png": true,
+      "docs/screenshots/mobile-login.png": true,
+      "docs/screenshots/mobile-register.png": true
+    }
+  }
+}
